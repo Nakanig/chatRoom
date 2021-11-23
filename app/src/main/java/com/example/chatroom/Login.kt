@@ -18,7 +18,6 @@ class Login : AppCompatActivity() {
 
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -41,6 +40,16 @@ class Login : AppCompatActivity() {
         btnLogin.setOnClickListener {
             val email = edtEmail.text.toString()
             val password = edtPassword.text.toString()
+            
+            if(email.isEmpty()){
+                edtEmail.error = "Aucilebelia velis shevseba"
+                return@setOnClickListener
+            }else if (password.isEmpty()){
+                edtPassword.error = "Aucilebelia velis shevseba"
+                return@setOnClickListener
+            }else{
+                Toast.makeText(this, "LOADING...", Toast.LENGTH_SHORT).show()
+            }
 
             login(email, password)
         }
@@ -65,9 +74,22 @@ class Login : AppCompatActivity() {
                 }
             }
     }
+    val firebaseAuth = FirebaseAuth.getInstance()
 
 
+    val authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+        val firebaseUser = firebaseAuth.currentUser
+        if (firebaseUser != null) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        firebaseAuth!!.addAuthStateListener(this.authStateListener!!)
+    }
 
 
 }

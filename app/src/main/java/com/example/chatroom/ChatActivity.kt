@@ -44,9 +44,13 @@ class ChatActivity : AppCompatActivity() {
         sendButton = findViewById(R.id.sentButton)
         messageList = ArrayList()
         messageAdapter = MessageAdapter(this,messageList)
+        
 
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
+
+
+
 
         // logika data rom gadavides recyclerView shi
         mDbRef.child("chats").child(senderRoom!!).child("messages")
@@ -76,6 +80,12 @@ class ChatActivity : AppCompatActivity() {
 
             val message = messageBox.text.toString()
             val messageObject = Message(message,senderUid)
+
+            if (message.isEmpty()){
+                messageBox.error = ""
+                return@setOnClickListener
+            }
+
 
             mDbRef.child("chats").child(senderRoom!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {

@@ -1,8 +1,10 @@
 package com.example.chatroom
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         userRecyclerView.layoutManager = LinearLayoutManager(this)
         userRecyclerView.adapter = adapter
+
 
         mDbRef.child("user").addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -75,6 +78,27 @@ class MainActivity : AppCompatActivity() {
         }
         return true
 
+    }
+
+    val firebaseAuth = FirebaseAuth.getInstance()
+
+
+    val authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+        val firebaseUser = firebaseAuth.currentUser
+        if (firebaseUser == null) {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        firebaseAuth!!.addAuthStateListener(this.authStateListener!!)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        firebaseAuth!!.removeAuthStateListener(this.authStateListener!!)
     }
 
 }

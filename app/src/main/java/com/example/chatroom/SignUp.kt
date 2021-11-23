@@ -40,6 +40,20 @@ class SignUp : AppCompatActivity() {
             val name = edtName.text.toString()
             val email = edtEmail.text.toString()
             val password = edtPassword.text.toString()
+            
+            if (name.isEmpty()){
+                edtName.error = "Aucilebelia velis shevseba"
+                return@setOnClickListener
+            }else if (email.isEmpty()){
+                edtEmail.error = "Aucilebelia velis shevseba"
+                return@setOnClickListener
+            }else if (password.isEmpty()){
+                edtPassword.error = "Aucilebelia velis shevseba"
+                return@setOnClickListener
+            }else{
+                Toast.makeText(this, "LOADING...", Toast.LENGTH_SHORT).show()
+            }
+            
 
             signup(name,email,password)
         }
