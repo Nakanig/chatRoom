@@ -65,11 +65,24 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
+    <EditText
+        android:id="@+id/edt_confirmpassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/edt_password"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edt_background"
+        android:paddingLeft="13dp"
+        android:hint="Confirm Password"
+        android:textSize="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
+
     <Button
         android:id="@+id/btnSignup"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edt_password"
+        android:layout_below="@id/edt_confirmpassword"
         android:background="@drawable/btn_background"
         android:textColor="@color/white"
         android:textSize="18dp"
